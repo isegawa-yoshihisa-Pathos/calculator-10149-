@@ -1,0 +1,295 @@
+@font-face {
+    font-family: 'Digital-7';
+    src: url('./fonts/DSEG7Classic-Bold.ttf') format('truetype');
+}
+
+table {
+    width: 380px;
+    height: 550px;
+
+    background-color: #fffaff;
+
+    border: 1px solid #dcdcdca4;
+    border-right: 4px solid #dcdcdca4;
+    border-bottom: 4px solid #dcdcdca4;
+    border-radius: 30px;
+
+    text-align: center;
+    font-family: 'Lucida Console';
+
+    padding: 20px 10px 15px 10px;
+    margin: 20px;
+}
+
+button {
+    width: 70px;
+    height: 55px;
+    font-size: 40px;
+    font-family: 'Lucida Console';
+    text-align: center;
+    line-height: 55px;
+
+    border-radius: 10px;
+
+    background-color: #000000;
+    color: #ffffff;
+    cursor: pointer;
+    &:hover {
+        background-color: #e0e0e0;
+    }
+}
+
+.header {
+    display: flex;
+    justify-content: stretch;
+}
+
+.logo {
+    font-size: 20px;
+    color: #000000;
+    text-align: left;
+    font-weight: bold;
+    line-height: 10px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    margin-left: 10px;
+}
+
+.model {
+    font-size: 10px;
+    color: #000000;
+    font-weight: normal;
+}
+
+.description {
+    font-size: 10px;
+    color: #000000;
+    text-align: top;
+    font-weight: normal;
+}
+
+.digits {
+    line-height: 14px;
+    color: #318f8a;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    margin-left: 30px;
+}
+
+.digits-number {
+    font-size: 20px;
+    font-family: 'impact';
+    font-style: italic;
+}
+
+.digits-description {
+    font-size: 9px;
+    font-weight: bold;
+}
+
+.solar-panel {
+    height: 30px;
+    width: 100px;
+    background-color: #3d4442;
+    border-top: 3px #dcdcdca4 solid;
+    border-left: 3px #dcdcdca4 solid;
+    border-right: 3px #dcdcdca4 solid;
+    border-bottom: 3px #dcdcdca4 solid;
+    border-radius: 4px;
+    margin-top: 22px;
+    margin-bottom: 22px;
+    margin-left: 10px;
+}
+
+.display {
+    height: 70px;
+
+    background-color: #626e6b;
+    border-top: 5px #dcdcdca4 solid;
+    border-left: 5px #dcdcdca4 solid;
+    border-right: 5px #dcdcdca4 solid;
+    border-bottom: 5px #dcdcdca4 solid;
+    border-radius: 5px;
+
+    margin-top:0px;
+}
+
+.display-container {
+    font-size: 20px;
+    font-family: 'Digital-7';
+    display: flex;
+    justify-content: stretch;
+    text-align: bottom;
+}
+
+.display-error {
+    font-size: 10px;
+    padding-top: 15px;
+    width: 10px;
+}
+
+.display-value {
+    font-size: 20px;
+    text-align: right;
+    width: 327px;
+}
+.operator {
+    width: 55px;
+    background-color: #808080;
+    color: #000000;
+    border-radius: 35px;
+    font-weight: bold;
+    &:hover {
+        background-color: #303030;
+    }
+}
+
+.equal {
+    height: 55px;
+    width: 210px;
+    background-color: #808080;
+    color: #000000;
+    border-radius: 35px;
+    font-size: 60px;
+    padding-top: 3px;
+    &:hover {
+        background-color: #303030;
+    }
+}
+
+.plus {
+    width: 55px;
+    height: 100px;
+    border-radius: 35px;
+    font-weight: bold;
+    background-color: #808080;
+    color: #000000;
+    padding-top: 10px;
+    &:hover {
+        background-color: #303030;
+    }
+}
+
+.divide {
+    width: 55px;
+    background-color: #808080;
+    border-radius: 35px;
+    position: relative;
+
+    &:hover {
+        background-color: #303030;
+    }
+}
+
+.dot-top {
+    width: 10px;
+    height: 10px;
+    background-color: #000000;
+    border-radius: 50%;
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.dot-bottom {
+    width: 10px;
+    height: 10px;
+    background-color: #000000;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.divide-line {
+    width: 80%;
+    height: 5.5px;
+    background-color: #000000;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.square-root {
+    width: 55px;
+    background-color: #808080;
+    color: #000000;
+    border-radius: 35px;
+    font-family:"Helvetica Neue";
+    font-size: 30px;
+    font-weight: bold;
+    &:hover {
+        background-color: #303030;
+    }
+}
+
+.toggle {
+    position: relative;
+}
+
+.plus-sign {
+    font-size: 40px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    transform: translate(-50%, -50%);
+}
+
+.slash {
+    font-size: 40px;
+    position: absolute;
+    top: 30px;
+    left: 35px;
+    transform: translate(-50%, -50%);
+}
+
+.minus-sign {
+    font-size: 40px;
+    position: absolute;
+    top: 40px;
+    left: 48px;
+    transform: translate(-50%, -50%);
+}
+
+.clear {
+    width: 55px;
+    background-color: #ff9500;
+    font-size: 35px;
+    color: #000000;
+    border-radius: 35px;
+    font-weight: bold;
+
+    padding-top: 0px;
+    display: flex;
+    justify-content: center;
+    &:hover {
+        background-color: #9f9500;
+    }
+}
+
+.all-clear {
+    width: 55px;
+    font-size: 25px;
+    background-color: #ff9500;
+    color: #000000;
+    border-radius: 35px;
+    font-weight: bold;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 20px;
+    padding-top: 5px;
+    &:hover {
+        background-color: #9f9500;
+    }
+}
+
+.divider {
+    width: 100%;
+    height: 2.5px;
+    background-color: #000000;
+}

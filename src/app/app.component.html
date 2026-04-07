@@ -1,0 +1,70 @@
+<div class="container">
+  <table>
+    <tr>
+      <td colspan="5" class="display">
+        <div class="display-container">
+          <div class="display-error">{{displayError()}}</div>
+          <div class="display-value">{{display|| "0."}}</div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5">
+        <div class="header">
+          <div class="logo">
+            <div>HDH<span class="model">HDC-Y02</span></div>
+            <div class="description">SIMPLE DESIGN CALCULATOR</div>
+          </div>
+          <div class="digits">
+            <div class="digits-number">10+8</div>
+            <div class="digits-description">DIGITS</div>
+          </div>
+          <div class="solar-panel"></div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td><button class="operator" (click)="pressPercentage()">%</button></td>
+      <td><button (click)="pressNumber('7')">7</button></td>
+      <td><button (click)="pressNumber('8')">8</button></td>
+      <td><button (click)="pressNumber('9')">9</button></td>
+      <td><button class="divide" (click)="pressOperator('/')">
+        <span class="dot-top"></span>
+        <span class="divide-line"></span>
+        <span class="dot-bottom"></span>
+      </button></td>
+    </tr>
+    <tr>
+      <td><button class="square-root" (click)="pressSqrt()">√</button></td>
+      <td><button (click)="pressNumber('4')">4</button></td>
+      <td><button (click)="pressNumber('5')">5</button></td>
+      <td><button (click)="pressNumber('6')">6</button></td>
+      <td><button class="operator" (click)="pressOperator('*')">✕</button></td>
+    </tr>
+    <tr>
+      <td><button class="clear" (click)="pressClear()">CE</button></td>
+      <td><button (click)="pressNumber('1')">1</button></td>
+      <td><button (click)="pressNumber('2')">2</button></td>
+      <td><button (click)="pressNumber('3')">3</button></td>
+      <td><button class="operator" (click)="pressOperator('-')">ー</button></td>
+    </tr>
+    <tr>
+      <td><button class="all-clear" (click)="pressAllClear()">
+        <span>ON</span>
+        <span class="divider"></span>
+        <span>C</span>
+      </button></td>
+      <td><button (click)="pressNumber('0')">0</button></td>
+      <td><button (click)="pressDot()">・</button></td>
+      <td><button (click)="pressSign()" class="toggle">
+        <span class="plus-sign">+</span>
+        <span class="slash">/</span>
+        <span class="minus-sign">-</span>
+      </button></td>
+      <td rowspan="2"><button class="plus" (click)="pressOperator('+')">十</button></td>
+    </tr>
+    <tr>
+      <td colspan="5"><button class="equal" (click)="pressEqual()">＝</button></td>
+    </tr>
+  </table>
+</div>
