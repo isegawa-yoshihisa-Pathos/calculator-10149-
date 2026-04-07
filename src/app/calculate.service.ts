@@ -173,10 +173,8 @@ export class CalculateService {
           case "-":
             break;
           case "*":
-            this.previousNum = this.numerical.executeOperation(this.previousNum!, this.storedValue! / 100n, this.lastOperator);
-            break;
           case "/":
-            this.previousNum = this.numerical.executeOperation(this.previousNum!, this.storedValue!, "*");
+            this.previousNum = this.numerical.executeOperation(this.previousNum!, this.storedValue! / 100n, this.lastOperator);
             break;
         }
         this.operator = this.lastOperator;

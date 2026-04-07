@@ -124,7 +124,7 @@ button {
 
 .display-error {
     font-size: 10px;
-    padding-top: 15px;
+    padding-top: 1px;
     width: 10px;
 }
 
@@ -266,7 +266,7 @@ button {
     display: flex;
     justify-content: center;
     &:hover {
-        background-color: #9f9500;
+        background-color: #442800;
     }
 }
 
@@ -284,7 +284,7 @@ button {
     line-height: 20px;
     padding-top: 5px;
     &:hover {
-        background-color: #9f9500;
+        background-color: #442800;
     }
 }
 

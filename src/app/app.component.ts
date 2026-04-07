@@ -65,22 +65,22 @@ export class AppComponent{
   }
 
   pressSign(){
-    this.display = this.numerical.toNumber(this.cal.toggleSign());
+    this.display = this.numerical.toFormat(this.cal.toggleSign());
     this.cal.log();
   }
 
   pressOperator(operator: string) {
-    this.display = this.numerical.toNumber(this.cal.getOperator(operator));
+    this.display = this.numerical.toFormat(this.cal.getOperator(operator));
     this.cal.log();
   }
 
   pressEqual(){
-    this.display = this.numerical.toNumber(this.cal.calculate());
+    this.display = this.numerical.toFormat(this.cal.calculate());
     this.cal.log();
   }
 
   pressClear() {
-    this.display = this.numerical.toNumber(this.cal.clear());
+    this.display = this.numerical.toFormat(this.cal.clear());
     this.cal.log();
   }
 
@@ -90,12 +90,12 @@ export class AppComponent{
   }
   
   pressPercentage(){
-    this.display = this.numerical.toNumber(this.cal.percentage());
+    this.display = this.numerical.toFormat(this.cal.percentage());
     this.cal.log();
   }
 
   pressSqrt(){
-    this.display = this.numerical.toNumber(this.cal.sqrt());
+    this.display = this.numerical.toFormat(this.cal.sqrt());
     this.cal.log();
   }
 }

@@ -25,15 +25,27 @@ export class NumericalService {
     }
     const integerPart = number / this.scale;
     const decimalPart = number % this.scale;
-    return (signLabel ? '-' : '') + (integerPart.toString().replace( /(\d)(?=(\d{3})+$)/g, '$1,' ) + '.' + decimalPart.toString().padStart(8, '0')).replace(/0+$/, '');
+    return (signLabel ? '-' : '') + (integerPart.toString() + '.' + decimalPart.toString().padStart(8, '0')).replace(/0+$/, '');
   }
 
-  toFormat(number: string): string {
-    if (!number.includes('.')) {
-      return  number.replace( /(\d)(?=(\d{3})+$)/g, '$1,' );
+  toFormat(number: string | bigint): string {
+    if (typeof number === 'string') {
+      if (!number.includes('.')) {
+        return  number.replace( /(\d)(?=(\d{3})+$)/g, '$1,' );
+      }
+      const [integerPart, decimalPart] = number.split('.');
+      return integerPart.replace( /(\d)(?=(\d{3})+$)/g, '$1,' ) + '.' + decimalPart;
+    }else if (typeof number === 'bigint') {
+      let signLabel: boolean = false;
+      if (number < 0n){
+        signLabel = true;
+        number = number * -1n;
+      }
+      const integerPart = number / this.scale;
+      const decimalPart = number % this.scale;
+      return (signLabel ? '-' : '') + (integerPart.toString().replace( /(\d)(?=(\d{3})+$)/g, '$1,' ) + '.' + decimalPart.toString().padStart(8, '0')).replace(/0+$/, '');
     }
-    const [integerPart, decimalPart] = number.split('.');
-    return integerPart.replace( /(\d)(?=(\d{3})+$)/g, '$1,' ) + '.' + decimalPart;
+    return '';
   }
 
   executeOperation(a: bigint, b: bigint, operator: string): bigint{
