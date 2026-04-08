@@ -16,13 +16,13 @@ export class CalculateService {
   public lastOperator:Operator = null;
   public getDecimal:number | null = null;
   public sqrtDone:boolean = false;
+  public sqrtError:boolean = false;
 
   constructor(private numerical: NumericalService){}
   
   inputNumber(number: string): string {
-    if (this.numerical.formatError){
-      this.allClear();
-    }
+    if (this.numerical.formatError) return this.numerical.toFormat(this.previousNum!);
+    if (this.sqrtError) return this.currentStr;
     if (this.sqrtDone){
       this.sqrtDone = false;
       this.currentNum = null;
@@ -51,6 +51,8 @@ export class CalculateService {
   }
 
   inputDot(): string{
+    if (this.numerical.formatError) return this.numerical.toFormat(this.previousNum!);
+    if (this.sqrtError) return this.currentStr;
     if (this.currentNum === null && this.currentStr === ""){
       this.currentStr = "0.";
       this.getDecimal = 0;
@@ -62,6 +64,7 @@ export class CalculateService {
   }
 
   toggleSign(): bigint{
+    if (this.numerical.formatError || this.sqrtError) return this.previousNum!;
     if (this.currentNum === null){
       if (this.previousNum === null){
         return 0n;
@@ -82,6 +85,7 @@ export class CalculateService {
   }
 
   getOperator(operator: Operator): bigint{
+    if (this.numerical.formatError || this.sqrtError) return this.previousNum!;
     if (this.currentNum === null && this.previousNum === null){
       this.lastOperator = this.operator;
       this.operator = operator;
@@ -104,10 +108,8 @@ export class CalculateService {
   }
 
   calculate(): bigint{
-    if (this.numerical.formatError) return this.previousNum!;
-    
+    if (this.numerical.formatError || this.sqrtError) return this.previousNum!;
     if (this.previousNum === null) return this.currentNum!;
-
     if (this.operator === null){
       if (this.storedValue === null) return this.previousNum!;
       this.operator = this.lastOperator;
@@ -154,10 +156,8 @@ export class CalculateService {
   }
 
   percentage(): bigint{
-    if (this.numerical.formatError) return this.previousNum!;
-
+    if (this.numerical.formatError || this.sqrtError) return this.previousNum!;
     if (this.previousNum === null) return this.allClear();
-
     if (this.currentNum === null) {
       if (this.operator === null){
         switch (this.lastOperator) {
@@ -226,17 +226,21 @@ export class CalculateService {
   }
 
   sqrt(): bigint{
+    if (this.numerical.formatError || this.sqrtError) return this.previousNum!;
     if (this.currentNum === null && this.previousNum === null) return 0n;
     if (this.currentNum === null){
       if(this.previousNum! < 0n){
-        this.numerical.formatError = true;
+        this.sqrtError = true;
+        this.previousNum = 0n;
         return 0n;
       }
       this.previousNum = this.numerical.toBigInt(Math.sqrt(Number(this.numerical.toNumber(this.previousNum!))).toString());
       return this.previousNum!;
     }
     if(this.currentNum! < 0n){
-      this.numerical.formatError = true;
+      this.sqrtError = true;
+      this.currentNum = 0n;
+      this.currentStr = "";
       return 0n;
     }
     this.currentNum = this.numerical.toBigInt(Math.sqrt(Number(this.numerical.toNumber(this.currentNum!))).toString());
@@ -258,6 +262,7 @@ export class CalculateService {
     this.numerical.formatError = false;
     this.getDecimal = null;
     this.sqrtDone = false;
+    this.sqrtError = false;
     return 0n;
   }
 

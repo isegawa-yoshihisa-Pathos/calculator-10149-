@@ -61,7 +61,7 @@ export class AppComponent{
   }
 
   displayError(): string{
-    if (this.numerical.formatError){
+    if (this.numerical.formatError || this.cal.sqrtError){
       return "E";
     }
     return "";
