@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Digital-7';
-    src: url('./fonts/DSEG7Classic-Bold.ttf') format('truetype');
+    src: url('../assets/fonts/DSEG7Classic-Bold.ttf') format('truetype');
 }
 
 table {
@@ -34,9 +34,10 @@ button {
     background-color: #000000;
     color: #ffffff;
     cursor: pointer;
-    &:hover {
+}
+
+button:hover {
         background-color: #e0e0e0;
-    }
 }
 
 .header {
@@ -139,9 +140,10 @@ button {
     color: #000000;
     border-radius: 35px;
     font-weight: bold;
-    &:hover {
-        background-color: #303030;
-    }
+}
+
+.operator:hover {
+    background-color: #303030;
 }
 
 .equal {
@@ -152,9 +154,10 @@ button {
     border-radius: 35px;
     font-size: 60px;
     padding-top: 3px;
-    &:hover {
-        background-color: #303030;
-    }
+}
+
+.equal:hover {
+    background-color: #303030;
 }
 
 .plus {
@@ -165,9 +168,10 @@ button {
     background-color: #808080;
     color: #000000;
     padding-top: 10px;
-    &:hover {
-        background-color: #303030;
-    }
+}
+
+.plus:hover {
+    background-color: #303030;
 }
 
 .divide {
@@ -176,9 +180,10 @@ button {
     border-radius: 35px;
     position: relative;
 
-    &:hover {
-        background-color: #303030;
-    }
+}
+
+.divide:hover {
+    background-color: #303030;
 }
 
 .dot-top {
@@ -221,9 +226,10 @@ button {
     font-family:"Helvetica Neue";
     font-size: 30px;
     font-weight: bold;
-    &:hover {
-        background-color: #303030;
-    }
+}
+
+.square-root:hover {
+    background-color: #303030;
 }
 
 .toggle {
@@ -233,7 +239,7 @@ button {
 .plus-sign {
     font-size: 40px;
     position: absolute;
-    top: 20px;
+    top: 18px;
     left: 20px;
     transform: translate(-50%, -50%);
 }
@@ -241,7 +247,7 @@ button {
 .slash {
     font-size: 40px;
     position: absolute;
-    top: 30px;
+    top: 26px;
     left: 35px;
     transform: translate(-50%, -50%);
 }
@@ -249,7 +255,7 @@ button {
 .minus-sign {
     font-size: 40px;
     position: absolute;
-    top: 40px;
+    top: 35px;
     left: 48px;
     transform: translate(-50%, -50%);
 }
@@ -265,9 +271,10 @@ button {
     padding-top: 0px;
     display: flex;
     justify-content: center;
-    &:hover {
-        background-color: #442800;
-    }
+}
+
+.clear:hover {
+    background-color: #442800;
 }
 
 .all-clear {
@@ -283,9 +290,10 @@ button {
     justify-content: center;
     line-height: 20px;
     padding-top: 5px;
-    &:hover {
-        background-color: #442800;
-    }
+}
+
+.all-clear:hover {
+    background-color: #442800;
 }
 
 .divider {

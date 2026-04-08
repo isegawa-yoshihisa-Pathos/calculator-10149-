@@ -3,6 +3,8 @@ import { CalculateService } from './calculate.service';
 import { HostListener } from '@angular/core';
 import { NumericalService } from './numerical.service';
 
+type Operator = "+" | "-" | "*" | "/" | null;
+
 @Component({
   selector: 'app-root',
   imports: [],
@@ -43,7 +45,7 @@ export class AppComponent{
     }
   }
 
-  display: string = "";
+  public display: string = "";
 
   constructor(private cal: CalculateService, private numerical: NumericalService){}
 
@@ -69,7 +71,7 @@ export class AppComponent{
     this.cal.log();
   }
 
-  pressOperator(operator: string) {
+  pressOperator(operator: Operator) {
     this.display = this.numerical.toFormat(this.cal.getOperator(operator));
     this.cal.log();
   }

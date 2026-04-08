@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { NumericalService } from './numerical.service';
 
+type Operator = "+" | "-" | "*" | "/" | null;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -10,17 +12,17 @@ export class CalculateService {
   private currentStr: string = "";
   private previousNum:bigint | null = null;
   private storedValue:bigint | null = null;
-  private operator:string = "";
-  private lastOperator:string = "";
+  private operator:Operator = null;
+  private lastOperator:Operator = null;
   private getDecimal:number | null = null;
 
   constructor(private numerical: NumericalService){}
   
   log(){
-    console.log(`currentNum: ${this.currentNum}`)
+    console.log(`currentNum: ${this.numerical.toFormat(this.currentNum)}`)
     console.log(`currentStr: ${this.currentStr}`)
-    console.log(`previousNum: ${this.previousNum}`)
-    console.log(`storedValue: ${this.storedValue}`)
+    console.log(`previousNum: ${this.numerical.toFormat(this.previousNum)}`)
+    console.log(`storedValue: ${this.numerical.toFormat(this.storedValue)}`)
     console.log(`operator: ${this.operator}`)
     console.log(`lastOperator: ${this.lastOperator}`);
     console.log("--------------------------------");
@@ -28,14 +30,7 @@ export class CalculateService {
   
   inputNumber(number: string): string {
     if (this.numerical.formatError){
-      this.previousNum = null;
-      this.storedValue = null;
-      this.operator = "";
-      this.lastOperator = "";
-      this.getDecimal = null;
-      this.currentNum = null;
-      this.currentStr = "";
-      this.numerical.formatError = false;
+      this.allClear();
     }
     if (this.getDecimal === null){
       if (this.currentStr.length < 10){
@@ -85,7 +80,7 @@ export class CalculateService {
     }
   }
 
-  getOperator(operator: string): bigint{
+  getOperator(operator: Operator): bigint{
     if (this.currentNum === null && this.previousNum === null){
       this.lastOperator = this.operator;
       this.operator = operator;
@@ -101,9 +96,7 @@ export class CalculateService {
     }
     this.lastOperator = this.operator;
     this.operator = operator;
-    if (this.operator == "*"){
-        this.storedValue = this.previousNum!;
-    }
+    if (this.operator == "*") this.storedValue = this.previousNum!;
     this.currentNum = null;
     this.currentStr = "";
     return this.previousNum!;
@@ -112,11 +105,9 @@ export class CalculateService {
   calculate(): bigint{
     if (this.numerical.formatError) return this.previousNum!;
     
-    if (this.previousNum === null) {
-      this.previousNum = 0n;
-    }
+    if (this.previousNum === null) this.previousNum = 0n;
 
-    if (this.operator === ""){
+    if (this.operator === null){
       this.operator = this.lastOperator;
       const num = this.currentNum === null ? this.previousNum! : this.currentNum!;
       switch (this.operator) {
@@ -128,36 +119,36 @@ export class CalculateService {
         case "*":
           this.previousNum = this.numerical.executeOperation(this.storedValue!, num, this.operator);
           break;
+        default:
+          break;
       }
 
     }else{
-      switch (this.operator) {
-        case "+":
-        case "-":
-          if (this.currentNum === null){
+      if (this.currentNum === null){
+        switch (this.operator) {
+          case "+":
+          case "-":
             this.storedValue = this.previousNum!;
             this.previousNum = this.numerical.executeOperation(0n, this.storedValue!, this.operator);
-          }else{
-            this.previousNum = this.numerical.executeOperation(this.previousNum!, this.currentNum!, this.operator);
-          }
-          break;
-        case "*":
-          this.previousNum = this.numerical.executeOperation(this.previousNum!, this.currentNum === null ? this.storedValue! : this.currentNum!, this.operator);
-          break;
-        case "/":
-          if (this.currentNum === null){
+            break;
+          case "*":
+            this.previousNum = this.numerical.executeOperation(this.previousNum!, this.storedValue!, this.operator);
+            break;
+          case "/":
             this.storedValue = this.previousNum!;
             this.previousNum = this.numerical.executeOperation(100000000n, this.previousNum!, this.operator);
-          }else{
-            this.previousNum = this.numerical.executeOperation(this.previousNum!, this.currentNum!, this.operator);
-          }
-          break;
+            break;
+          default:
+            break;
+        }
+      }else{
+        this.previousNum = this.numerical.executeOperation(this.previousNum!, this.currentNum!, this.operator);
       }
     }
     this.currentNum = null;
     this.currentStr = "";
     this.lastOperator = this.operator;
-    this.operator = "";
+    this.operator = null;
     return this.previousNum!;
   }
 
@@ -167,68 +158,74 @@ export class CalculateService {
     if (this.previousNum === null) return 0n;
 
     if (this.currentNum === null) {
-      if (this.operator === ""){
+      if (this.operator === null){
         switch (this.lastOperator) {
           case "+":
           case "-":
             break;
           case "*":
           case "/":
-            this.previousNum = this.numerical.executeOperation(this.previousNum!, this.storedValue! / 100n, this.lastOperator);
+            this.previousNum = this.numerical.executeOperation(this.previousNum, this.storedValue! / 100n, this.lastOperator);
+            break;
+          default:
             break;
         }
         this.operator = this.lastOperator;
       }else{
         switch (this.operator) {
           case "*":
-            this.previousNum = this.numerical.executeOperation(this.previousNum!, this.storedValue! / 100n, this.operator);
+            this.previousNum = this.numerical.executeOperation(this.previousNum, this.storedValue! / 100n, this.operator);
             break;
           case "/":
-            this.previousNum = this.numerical.executeOperation(100n * 100000000n, this.previousNum!, this.operator);
-            this.storedValue = this.previousNum!;
+            this.previousNum = this.numerical.executeOperation(100n * 100000000n, this.previousNum, this.operator);
+            this.storedValue = this.previousNum;
+            break;
+          default:
             break;
         }
       }
     }else {
-      if (this.operator !== ""){
-        switch (this.operator) {
-          case "+":
-          case "-":
-            this.storedValue = this.previousNum!;
-            this.previousNum = this.numerical.executeOperation(this.previousNum!, this.numerical.executeOperation(this.previousNum!, this.currentNum!/100n, "*"), this.operator);
-            break;
-          case "*":
-          case "/":
-            this.previousNum = this.numerical.executeOperation(this.previousNum!, this.currentNum! / 100n, this.operator);
-            break;
-        }
-      }else{
+      if (this.operator === null){
         switch (this.lastOperator) {
           case "+":
           case "-":
-            this.previousNum = this.numerical.executeOperation(this.previousNum!, this.numerical.executeOperation(this.previousNum!, this.currentNum!/100n, "*"), this.lastOperator);
+            this.previousNum = this.numerical.executeOperation(this.previousNum, this.numerical.executeOperation(this.previousNum!, this.currentNum!/100n, "*"), this.lastOperator);
             break;
           case "*":
-            this.previousNum = this.numerical.executeOperation(this.currentNum!, this.storedValue! / 100n, this.lastOperator);
+            this.previousNum = this.numerical.executeOperation(this.currentNum, this.storedValue! / 100n, this.lastOperator);
             break;
           case "/":
-            this.previousNum = this.numerical.executeOperation(this.storedValue!, this.currentNum!, "*");
+            this.previousNum = this.numerical.executeOperation(this.storedValue!, this.currentNum, "*");
+            break;
+          default:
             break;
         }
         this.operator = this.lastOperator;
+      }else{
+        switch (this.operator) {
+          case "+":
+          case "-":
+            this.storedValue = this.previousNum;
+            this.previousNum = this.numerical.executeOperation(this.previousNum, this.numerical.executeOperation(this.previousNum, this.currentNum/100n, "*"), this.operator);
+            break;
+          case "*":
+          case "/":
+            this.previousNum = this.numerical.executeOperation(this.previousNum, this.currentNum / 100n, this.operator);
+            break;
+          default:
+            break;
+        }
       }
       this.currentNum = null;
       this.currentStr = "";
     }
     this.lastOperator = this.operator;
-    this.operator = "";
+    this.operator = null;
     return this.previousNum!;
   }
 
   sqrt(): bigint{
-    if (this.currentNum === null && this.previousNum === null){
-      return 0n;
-    }
+    if (this.currentNum === null && this.previousNum === null) return 0n;
     if (this.currentNum === null){
       if(this.previousNum! < 0n){
         this.numerical.formatError = true;
@@ -253,8 +250,8 @@ export class CalculateService {
     this.currentStr = "";
     this.previousNum = null;
     this.storedValue = null;
-    this.operator = "";
-    this.lastOperator = "";
+    this.operator = null;
+    this.lastOperator = null;
     this.numerical.formatError = false;
     this.getDecimal = null;
     return "";

@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 
+type Operator = "+" | "-" | "*" | "/" | null;
 
 @Injectable({
   providedIn: 'root',
 })
+
 export class NumericalService {
   private scale:bigint = 100000000n;
   public formatError:boolean = false;
@@ -28,14 +30,15 @@ export class NumericalService {
     return (signLabel ? '-' : '') + (integerPart.toString() + '.' + decimalPart.toString().padStart(8, '0')).replace(/0+$/, '');
   }
 
-  toFormat(number: string | bigint): string {
+  toFormat(number: string | bigint | null): string {
     if (typeof number === 'string') {
       if (!number.includes('.')) {
         return  number.replace( /(\d)(?=(\d{3})+$)/g, '$1,' );
       }
       const [integerPart, decimalPart] = number.split('.');
       return integerPart.replace( /(\d)(?=(\d{3})+$)/g, '$1,' ) + '.' + decimalPart;
-    }else if (typeof number === 'bigint') {
+    }
+    if (typeof number === 'bigint') {
       let signLabel: boolean = false;
       if (number < 0n){
         signLabel = true;
@@ -48,7 +51,7 @@ export class NumericalService {
     return '';
   }
 
-  executeOperation(a: bigint, b: bigint, operator: string): bigint{
+  executeOperation(a: bigint, b: bigint, operator: Operator): bigint{
     let answer: bigint;
     switch (operator) {
       case "+":
