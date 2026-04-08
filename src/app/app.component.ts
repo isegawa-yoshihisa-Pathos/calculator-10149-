@@ -49,6 +49,17 @@ export class AppComponent{
 
   constructor(private cal: CalculateService, private numerical: NumericalService){}
 
+  log(action: string){
+    console.log(`action: ${action}`);
+    console.log(`currentNum: ${this.numerical.toFormat(this.cal.currentNum)}`)
+    console.log(`currentStr: ${this.cal.currentStr}`)
+    console.log(`previousNum: ${this.numerical.toFormat(this.cal.previousNum)}`)
+    console.log(`storedValue: ${this.numerical.toFormat(this.cal.storedValue)}`)
+    console.log(`operator: ${this.cal.operator}`)
+    console.log(`lastOperator: ${this.cal.lastOperator}`);
+    console.log("--------------------------------");
+  }
+
   displayError(): string{
     if (this.numerical.formatError){
       return "E";
@@ -58,46 +69,46 @@ export class AppComponent{
 
   pressNumber(number: string) {
     this.display = this.numerical.toFormat(this.cal.inputNumber(number));
-    this.cal.log();
+    this.log(`press[${number}]`);
   }
   
   pressDot() {
     this.display = this.numerical.toFormat(this.cal.inputDot());
-    this.cal.log();
+    this.log(`addDot`);
   }
 
   pressSign(){
     this.display = this.numerical.toFormat(this.cal.toggleSign());
-    this.cal.log();
+    this.log(`toggleSign`);
   }
 
   pressOperator(operator: Operator) {
     this.display = this.numerical.toFormat(this.cal.getOperator(operator));
-    this.cal.log();
+    this.log(`press[${operator}]`);
   }
 
   pressEqual(){
     this.display = this.numerical.toFormat(this.cal.calculate());
-    this.cal.log();
+    this.log(`press[=]`);
   }
 
   pressClear() {
     this.display = this.numerical.toFormat(this.cal.clear());
-    this.cal.log();
+    this.log(`Clear`);
   }
 
   pressAllClear() {
     this.display = this.cal.allClear();
-    this.cal.log();
+    this.log(`AllClear`);
   }
   
   pressPercentage(){
     this.display = this.numerical.toFormat(this.cal.percentage());
-    this.cal.log();
+    this.log(`press[%]`);
   }
 
   pressSqrt(){
     this.display = this.numerical.toFormat(this.cal.sqrt());
-    this.cal.log();
+    this.log(`press[√]`);
   }
 }

@@ -8,25 +8,15 @@ type Operator = "+" | "-" | "*" | "/" | null;
 })
 
 export class CalculateService {
-  private currentNum:bigint | null = null;
-  private currentStr: string = "";
-  private previousNum:bigint | null = null;
-  private storedValue:bigint | null = null;
-  private operator:Operator = null;
-  private lastOperator:Operator = null;
-  private getDecimal:number | null = null;
+  public currentNum:bigint | null = null;
+  public currentStr: string = "";
+  public previousNum:bigint | null = null;
+  public storedValue:bigint | null = null;
+  public operator:Operator = null;
+  public lastOperator:Operator = null;
+  public getDecimal:number | null = null;
 
   constructor(private numerical: NumericalService){}
-  
-  log(){
-    console.log(`currentNum: ${this.numerical.toFormat(this.currentNum)}`)
-    console.log(`currentStr: ${this.currentStr}`)
-    console.log(`previousNum: ${this.numerical.toFormat(this.previousNum)}`)
-    console.log(`storedValue: ${this.numerical.toFormat(this.storedValue)}`)
-    console.log(`operator: ${this.operator}`)
-    console.log(`lastOperator: ${this.lastOperator}`);
-    console.log("--------------------------------");
-  }
   
   inputNumber(number: string): string {
     if (this.numerical.formatError){
@@ -34,7 +24,11 @@ export class CalculateService {
     }
     if (this.getDecimal === null){
       if (this.currentStr.length < 10){
-        this.currentStr += number;
+        if (this.currentStr === "0"){
+          this.currentStr = number;
+        }else{
+          this.currentStr += number;
+        }
       }
     }else{
       if (this.getDecimal < 8){
@@ -108,6 +102,7 @@ export class CalculateService {
     if (this.previousNum === null) this.previousNum = 0n;
 
     if (this.operator === null){
+      if (this.storedValue === null) return this.previousNum!;
       this.operator = this.lastOperator;
       const num = this.currentNum === null ? this.previousNum! : this.currentNum!;
       switch (this.operator) {
@@ -122,7 +117,6 @@ export class CalculateService {
         default:
           break;
       }
-
     }else{
       if (this.currentNum === null){
         switch (this.operator) {
@@ -265,10 +259,10 @@ export class CalculateService {
       if (this.currentNum === null){
         return this.previousNum ?? 0n;
       }else{
-        this.currentNum = 0n;
+        this.currentNum = null;
         this.currentStr = "";
         this.getDecimal = null;
-        return this.currentNum!;
+        return 0n;
       }
     }
   }
