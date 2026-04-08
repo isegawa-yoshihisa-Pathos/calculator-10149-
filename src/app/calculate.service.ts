@@ -156,7 +156,7 @@ export class CalculateService {
   percentage(): bigint{
     if (this.numerical.formatError) return this.previousNum!;
 
-    if (this.previousNum === null) return 0n;
+    if (this.previousNum === null) return this.allClear();
 
     if (this.currentNum === null) {
       if (this.operator === null){
@@ -248,7 +248,7 @@ export class CalculateService {
     return this.currentNum!;
   }
 
-  allClear(): string{
+  allClear(): bigint{
     this.currentNum = null;
     this.currentStr = "";
     this.previousNum = null;
@@ -258,7 +258,7 @@ export class CalculateService {
     this.numerical.formatError = false;
     this.getDecimal = null;
     this.sqrtDone = false;
-    return "";
+    return 0n;
   }
 
   clear(): bigint{

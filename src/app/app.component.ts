@@ -98,7 +98,7 @@ export class AppComponent{
   }
 
   pressAllClear() {
-    this.display = this.cal.allClear();
+    this.display = this.numerical.toFormat(this.cal.allClear());
     this.log(`AllClear`);
   }
   
