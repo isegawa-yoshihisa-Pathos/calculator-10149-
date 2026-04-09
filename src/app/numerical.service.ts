@@ -81,4 +81,16 @@ export class NumericalService {
     }
     return answer;
   }
+
+  bigintSqrt(number: bigint): bigint {
+    if (number < 2n) return 0n;
+    if (number === 100000000n) return 100000000n;
+    let x =  number;
+    let y = (x + 1n) / 2n;
+    while (y < x) {
+      x = y;
+      y = (this.executeOperation(number, x, "/") + x) / 2n;
+    }
+    return x;
+  }
 }

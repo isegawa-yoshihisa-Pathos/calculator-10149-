@@ -234,7 +234,7 @@ export class CalculateService {
         this.previousNum = 0n;
         return 0n;
       }
-      this.previousNum = this.numerical.toBigInt(Math.sqrt(Number(this.numerical.toNumber(this.previousNum!))).toString());
+      this.previousNum = this.numerical.bigintSqrt(this.previousNum!);
       return this.previousNum!;
     }
     if(this.currentNum! < 0n){
@@ -243,7 +243,7 @@ export class CalculateService {
       this.currentStr = "";
       return 0n;
     }
-    this.currentNum = this.numerical.toBigInt(Math.sqrt(Number(this.numerical.toNumber(this.currentNum!))).toString());
+    this.currentNum = this.numerical.bigintSqrt(this.currentNum!);
     if (this.operator == "+" || this.operator == "-" || this.operator == "/") {
         this.storedValue = this.currentNum;
     }
